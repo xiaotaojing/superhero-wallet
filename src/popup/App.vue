@@ -145,7 +145,6 @@ body {
 
 .ae-main {
   position: relative;
-  min-height: 600px;
   margin: 0 auto;
   overflow: visible;
 

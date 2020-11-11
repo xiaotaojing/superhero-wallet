@@ -8,10 +8,7 @@
     >
       <RouterLink :to="{ name: 'settings-security' }">{{ $t('pages.account.backup') }}</RouterLink>
     </i18n>
-    <div class="tour__step1">
-      <AccountInfo />
-      <BalanceInfo />
-    </div>
+    <AccountCardSection class="tour__step1" />
     <div class="submenu-bg">
       <BoxButton
         data-cy="tip-button"
@@ -70,8 +67,7 @@ import Withdraw from '../../../icons/withdraw-icon.svg?vue-component';
 import Settings from '../../../icons/settings-icon.svg?vue-component';
 import RecentTransactions from '../components/RecentTransactions';
 import Tokens from '../../../icons/tokens.svg?vue-component';
-import BalanceInfo from '../components/BalanceInfo';
-import AccountInfo from '../components/AccountInfo';
+import AccountCardSection from '../components/AccountCardSection';
 import BoxButton from '../components/BoxButton';
 
 export default {
@@ -85,8 +81,7 @@ export default {
     Withdraw,
     Settings,
     RecentTransactions,
-    BalanceInfo,
-    AccountInfo,
+    AccountCardSection,
     BoxButton,
     Invite,
     Tokens,

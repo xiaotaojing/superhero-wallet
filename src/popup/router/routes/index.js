@@ -1,5 +1,6 @@
 import Index from '../pages/Index';
 import Account from '../pages/Account';
+import Accounts from '../pages/Accounts';
 import PopupSignTransaction from '../pages/Popups/SignTx';
 import PopupConnect from '../pages/Popups/Connect';
 import PopupAskAccounts from '../pages/Popups/AskAccounts';
@@ -58,6 +59,14 @@ export default [
     path: '/account',
     name: 'account',
     component: Account,
+  },
+  {
+    path: '/accounts',
+    name: 'accounts',
+    component: Accounts,
+    meta: {
+      title: 'accounts',
+    },
   },
   {
     name: 'popup-sign-tx',

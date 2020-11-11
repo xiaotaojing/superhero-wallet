@@ -93,12 +93,10 @@ export default {
 @import '../../../styles/variables';
 
 .balance-info {
-  height: 76px;
+  height: 55px;
   background-image: url('../../../icons/acc_balance.png');
   border-bottom: 2px solid $transactions-bg;
   display: flex;
-  padding: 0 20px 10px 20px;
-  margin-top: 15px;
   color: $text-color;
   font-size: 26px;
   line-height: 34px;

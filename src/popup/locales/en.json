@@ -76,6 +76,10 @@
       "title": "Are you sure you want to remove this account?",
       "msg": "This action will remove your account from the wallet and will delete the extension storage. Make sure you have backed up your seed phrase before proceeding. This action cannot be undone!"
     },
+    "removeSubaccount": {
+      "title": "Remove sub-account?",
+      "msg": "This sub-account will be removed from your wallet and deleted from storage. It will still remain stored on the blockchain and you will be able to restore it with your seed phrase. Make sure you have backed up your seed phrase before you proceed. This action cannot be undone!"
+    },
     "verified": {
       "title": "What is a \"Verified\" URL?",
       "msg": "If a URL is marked as verified, it means the owner of this URL is already a fellow Superhero — and that is awesome! An AE address has been found on the page and tips can be claimed easily."
@@ -211,6 +215,7 @@
       "understand": "I understand that this is a cryptocurrency wallet and I am responsible for backing up my account recovery seed phrase."
     },
     "titles": {
+      "accounts": "Accounts",
       "settings": "Settings",
       "language": "Language",
       "security": "Security",
@@ -267,6 +272,9 @@
       "updateExtension": "New version available! Please update your extension.",
       "updateAvailable": "New version is available in the store!",
       "claim-name": "Register a name"
+    },
+    "accounts": {
+      "showWallet": "Show on Wallet Home"
     },
     "claim": {
       "claim": "Claim tips",
