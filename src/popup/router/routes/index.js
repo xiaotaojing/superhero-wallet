@@ -42,6 +42,7 @@ import Invite from '../pages/Invite';
 import InviteClaim from '../pages/InviteClaim';
 
 import BuySellToken from '../pages/WordBazaar/BuySellToken';
+import CreateVote from '../pages/WordBazaar/CreateVote';
 
 import webIframePopups from './web-iframe-popups';
 
@@ -409,6 +410,15 @@ export default [
     component: BuySellToken,
     meta: {
       title: 'sell-token',
+      notPersist: true,
+    },
+  },
+  {
+    name: 'create-vote',
+    path: '/create-vote',
+    component: CreateVote,
+    meta: {
+      title: 'create-vote',
       notPersist: true,
     },
   },

@@ -231,4 +231,7 @@ export default {
     });
     await dispatch('reset');
   },
+  async getHeight({ state: { sdk } }) {
+    return sdk.height();
+  },
 };
