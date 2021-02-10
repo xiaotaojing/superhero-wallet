@@ -16,6 +16,7 @@ import runMigrations from './migrations';
 import invitesModule from './modules/invites';
 import permissionsModule from './modules/permissions';
 import fungibleTokensModule from './modules/fungibleTokens';
+import wordbazaar from './modules/wordbazaar';
 import { defaultNetwork } from '../popup/utils/constants';
 
 Vue.use(Vuex);
@@ -118,5 +119,6 @@ export default new Vuex.Store({
     invites: invitesModule,
     permissions: permissionsModule,
     fungibleTokens: fungibleTokensModule,
+    wordbazaar,
   },
 });

@@ -10,6 +10,7 @@ export default {
     tokenBalances: [],
     selectedToken: null,
     aePublicData: {},
+    fungibleTokenContracts: {},
   },
   mutations: {
     setSelectedToken(state, payload) {
@@ -27,8 +28,45 @@ export default {
     setAePublicData(state, payload) {
       state.aePublicData = payload;
     },
+    setFungibleTokenContract(state, contractAddress, instance) {
+      state.fungibleTokenContracts[contractAddress] = instance;
+    },
   },
   actions: {
+    async initFungibleTokenContractIfNeeded(
+      { commit, state: { fungibleTokenContracts }, rootState: { sdk } },
+      contractAddress,
+    ) {
+      if (!fungibleTokenContracts[contractAddress]) {
+        const contract = await sdk.getContractInstance(FUNGIBLE_TOKEN_CONTRACT, {
+          contractAddress,
+        });
+        commit('setFungibleTokenContract', contractAddress, contract);
+        return contract;
+      }
+
+      return fungibleTokenContracts[contractAddress];
+    },
+    async createOrChangeTokenAllowance(
+      { dispatch, rootState: { sdk }, rootGetters: { activeNetwork } },
+      { contractAddress, amount, forAccount = null },
+    ) {
+      const contract = await dispatch('initFungibleTokenContractIfNeeded', contractAddress);
+
+      const { decodedResult } = await contract.methods.allowance({
+        from_account: await sdk.address(),
+        for_account: forAccount || activeNetwork.tipContractV2.replace('ct_', 'ak_'),
+      });
+
+      const allowanceAmount =
+        decodedResult !== undefined
+          ? new BigNumber(decodedResult).multipliedBy(-1).plus(amount).toNumber()
+          : amount;
+
+      return contract.methods[
+        decodedResult !== undefined ? 'change_allowance' : 'create_allowance'
+      ](forAccount || activeNetwork.tipContractV2.replace('ct_', 'ak_'), allowanceAmount);
+    },
     async getAvailableTokens({ rootGetters: { activeNetwork }, commit }) {
       const availableTokens = await fetchJson(
         `${activeNetwork.backendUrl}/tokenCache/tokenInfo`,

@@ -41,6 +41,8 @@ import AuctionBid from '../pages/Names/AuctionBid';
 import Invite from '../pages/Invite';
 import InviteClaim from '../pages/InviteClaim';
 
+import BuySellToken from '../pages/WordBazaar/BuySellToken';
+
 import webIframePopups from './web-iframe-popups';
 
 export default [
@@ -389,6 +391,24 @@ export default [
     props: true,
     meta: {
       title: 'invite',
+      notPersist: true,
+    },
+  },
+  {
+    name: 'buy-token',
+    path: '/buy-token',
+    component: BuySellToken,
+    meta: {
+      title: 'buy-token',
+      notPersist: true,
+    },
+  },
+  {
+    name: 'sell-token',
+    path: '/sell-token',
+    component: BuySellToken,
+    meta: {
+      title: 'sell-token',
       notPersist: true,
     },
   },
