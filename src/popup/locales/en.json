@@ -215,6 +215,10 @@
       "understand": "I understand that this is a cryptocurrency wallet and I am responsible for backing up my account recovery seed phrase."
     },
     "titles": {
+      "tx-history": "Tx history",
+      "payments": "Payments",
+      "balances": "Balances",
+      "tips": "Tips",
       "settings": "Settings",
       "language": "Language",
       "security": "Security",
@@ -259,7 +263,6 @@
       "activity": "Activity",
       "accountName": "Account name",
       "copy": "Copy",
-      "tip": "Tip",
       "claim": "Claim Tip",
       "receive": "Receive",
       "latestTransactions": "Latest transactions",

@@ -1,8 +1,8 @@
 <template>
-  <div class="button-container">
-    <RouterLink :to="to" class="button-content" :class="{ disabled }">
-      <slot name="icon" />
-      <span class="button-text" :class="accent ? 'button-text-accent' : ''">{{ text }}</span>
+  <div>
+    <RouterLink :to="to" class="button">
+      <component :is="icon" class="icon" />
+      <span class="text">{{ text }}</span>
     </RouterLink>
   </div>
 </template>
@@ -10,63 +10,60 @@
 <script>
 export default {
   props: {
-    text: {
-      type: String,
-      required: true,
-    },
-    to: [String, Object],
-    accent: Boolean,
-    disabled: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
+    text: { type: String, required: true },
+    icon: { type: Object, required: true },
+    to: { type: String, required: true },
   },
 };
 </script>
 <style lang="scss" scoped>
 @import '../../../styles/variables';
+@import '../../../styles/typography';
 
-.button-container {
-  width: 33%;
-  display: inline-block;
-  padding: 10px;
-  color: $gray-1;
+.button {
+  width: 88px;
+  height: 64px;
+  background: $color-bg-2;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
 
-  .button-content {
-    background: $box-button-color;
-    border-radius: 5px;
-    padding: 15px 10px;
-    border: 1px solid transparent;
-    display: block;
-    color: inherit;
-    text-decoration: none;
+  .icon {
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+  }
 
-    &:hover {
-      background-color: $secondary-color;
-      cursor: pointer;
-    }
+  .text {
+    @extend %face-sans-15-medium;
 
-    .button-text {
-      font-size: 15px;
-      display: block;
-      font-weight: bold;
-      margin-top: 5px;
-      line-height: 20px;
-
-      &.button-text-accent {
-        color: $accent-color;
-      }
-    }
-
-    &.disabled {
-      pointer-events: all;
-      opacity: 0.3;
-    }
+    line-height: 24px;
+    color: $color-dark-grey;
   }
 
   &:hover {
-    color: $white-1;
+    background: $color-blue-alpha-15;
+
+    .icon {
+      opacity: 1;
+
+      path {
+        fill: $color-blue;
+      }
+    }
+
+    .text {
+      color: $color-blue;
+    }
+  }
+
+  &:active {
+    background-color: rgba($color-blue-alpha-15, 0.1);
   }
 }
 </style>
