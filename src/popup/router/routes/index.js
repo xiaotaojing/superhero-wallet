@@ -43,6 +43,7 @@ import InviteClaim from '../pages/InviteClaim';
 
 import BuySellToken from '../pages/WordBazaar/BuySellToken';
 import CreateVote from '../pages/WordBazaar/CreateVote';
+import Vote from '../pages/WordBazaar/Vote';
 
 import webIframePopups from './web-iframe-popups';
 
@@ -419,6 +420,42 @@ export default [
     component: CreateVote,
     meta: {
       title: 'create-vote',
+      notPersist: true,
+    },
+  },
+  {
+    name: 'vote',
+    path: '/vote',
+    component: Vote,
+    meta: {
+      title: 'vote',
+      notPersist: true,
+    },
+  },
+  {
+    name: 'revoke-vote',
+    path: '/revoke-vote',
+    component: Vote,
+    meta: {
+      title: 'revoke-vote',
+      notPersist: true,
+    },
+  },
+  {
+    name: 'claim-back',
+    path: '/claim-back',
+    component: Vote,
+    meta: {
+      title: 'claim-back',
+      notPersist: true,
+    },
+  },
+  {
+    name: 'payout-tokens',
+    path: '/payout-tokens',
+    component: Vote,
+    meta: {
+      title: 'payout-tokens',
       notPersist: true,
     },
   },

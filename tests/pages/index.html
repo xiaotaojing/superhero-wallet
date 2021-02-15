@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Deeplink test page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <style>
     table td:last-child,
     a {
@@ -11,6 +13,7 @@
     }
   </style>
 </head>
+
 <body>
   <script>
     const currentUrl = new URL(window.location);
@@ -20,6 +23,10 @@
     const callbackParams = `x-success=${successUrl}&x-cancel=${cancelUrl}`;
     const message = encodeURIComponent(`This is a test message! http://example.com`);
     const url = encodeURIComponent('http://example.com/article?id=123123');
+    const saleContractAddress = 'ct_2WGjDX1EcnN8ZgouMt6469ywoNXbmnGzBNNHdd1xJwywX1Upz2';
+    const walletAddress = 'ak_psgfxY4VcnJBTTshx2amBFf397ryoPKTTXyAcrx7BxVAVbt1W';
+    const voteAddress = 'ct_TURXFnWFWxRkrcAUK61GiC3sVeGY1uuCru2Zgyy4wJAF8WpXj';
+    const tokenAddress = 'ct_EfojX9qfsq2kdxcmhUtCrRdJmXkSTKiRHacL7bCs3wWTCLrMW';
 
     const prefixes = ['superhero:', 'https://wallet.superhero.com/', 'http://localhost:5000/'];
     const paths = [
@@ -36,16 +43,20 @@
       `comment?id=26_v1&text=${message}&${callbackParams}`,
       `comment?id=26_v1&parentId=87&text=${message}&${callbackParams}`,
       `address` +
-        `?x-success=${encodeURIComponent(`${currentUrl}?result=success&address={address}`)}` +
-        `&x-cancel=${cancelUrl}`,
+      `?x-success=${encodeURIComponent(`${currentUrl}?result=success&address={address}`)}` +
+      `&x-cancel=${cancelUrl}`,
       `sign-message` +
-        `?message=${message}` +
-        `&x-success=${encodeURIComponent(`${currentUrl}?result=success&signature={signature}`)}` +
-        `&x-cancel=${cancelUrl}`,
+      `?message=${message}` +
+      `&x-success=${encodeURIComponent(`${currentUrl}?result=success&signature={signature}`)}` +
+      `&x-cancel=${cancelUrl}`,
       `invite/Yqk76XDXNGVMZiCVfzE9NGHwhbXiCAsah2bxVpevCGjdLeeqPaSBVR4CkAdLyb1a7HGn2RD69RDLxYF3rdL3MWouvTyyK`,
-      'buy-token?sale=ct_2n3AwDgQhGWWhh2CGe15cYhpoziHFraVTLbdQJjErbjYstdQHT&buyAmount=0.01',
-      'sell-token?sale=ct_2n3AwDgQhGWWhh2CGe15cYhpoziHFraVTLbdQJjErbjYstdQHT&sellAmount=0.01',
-      `create-vote?sale=ct_2n3AwDgQhGWWhh2CGe15cYhpoziHFraVTLbdQJjErbjYstdQHT&description=${message}&payout=ak_psgfxY4VcnJBTTshx2amBFf397ryoPKTTXyAcrx7BxVAVbt1W`
+      `buy-token?sale=${saleContractAddress}&buyAmount=0.01`,
+      `sell-token?sale=${saleContractAddress}&sellAmount=0.01`,
+      `create-vote?sale=${saleContractAddress}&description=${message}&payout=${walletAddress}`,
+      `vote?voteAddress=${voteAddress}&tokenAddress=${tokenAddress}&stakeAmount=1.01`,
+      `revoke-vote?voteAddress=${voteAddress}`,
+      `claim-back?voteAddress=${voteAddress}`,
+      `payout-tokens?contractAddress=${saleContractAddress}&voteId=6`
     ];
 
     function rerenderDocument() {
@@ -92,4 +103,5 @@
     rerenderDocument();
   </script>
 </body>
+
 </html>
