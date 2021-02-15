@@ -1,30 +1,41 @@
 <template>
   <div class="header" v-if="showNavigation && !aeppPopup">
-    <div class="content" :class="{ isLoggedIn }">
-      <Arrow v-if="title && !tourRunning" @click="back" class="back-arrow" data-cy="back-arrow" />
-      <Logo :class="$route.path === '/intro' && !isLoggedIn ? 'intro_style' : ''" v-else />
+    <div class="content">
+      <div class="left">
+        <Logo class="logo-small" />
+        <button v-if="title && !tourRunning" @click="back" class="btn-icon back">
+          <Back data-cy="back-arrow" />
+        </button>
+      </div>
 
       <div class="title">
         {{ pageTitle || (title && $t(`pages.titles.${title}`)) || $t('pages.titles.home') }}
       </div>
 
-      <div v-if="isLoggedIn">
-        <Settings
+      <div class="right">
+        <button
           v-if="$route.path === '/notifications'"
-          class="settings"
           @click="$router.push('/notifications/settings')"
-        />
-        <template v-else-if="$route.path !== '/notifications/settings'">
-          <span class="noti-holder" @click="toNotifications" data-cy="noti">
-            <span v-if="notificationsCount" class="noti-count" data-cy="noti-count">
-              {{ notificationsCount }}
-            </span>
+          class="btn-icon settings"
+        >
+          <Settings />
+        </button>
+        <span
+          v-else-if="$route.path !== '/notifications/settings'"
+          @click="toNotifications"
+          class="notifications"
+          data-cy="noti"
+        >
+          <button class="btn-icon">
             <Bell />
-          </span>
-          <button @click="$emit('toggle-sidebar')">
-            <Hamburger data-cy="hamburger" />
           </button>
-        </template>
+          <span v-if="notificationsCount" class="count" data-cy="noti-count">
+            {{ notificationsCount }}
+          </span>
+        </span>
+        <button @click="$emit('toggle-sidebar')" class="btn-icon">
+          <Menu data-cy="hamburger" />
+        </button>
       </div>
     </div>
   </div>
@@ -32,14 +43,14 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import Arrow from '../../../icons/arrow.svg?vue-component';
-import Bell from '../../../icons/bell.svg?vue-component';
-import Hamburger from '../../../icons/hamburger.svg?vue-component';
 import Logo from '../../../icons/logo-small.svg?vue-component';
-import Settings from '../../../icons/settings.svg?vue-component';
+import Back from '../../../icons/back.svg?vue-component';
+import Bell from '../../../icons/bell.svg?vue-component';
+import Settings from '../../../icons/notif-settings.svg?vue-component';
+import Menu from '../../../icons/menu.svg?vue-component';
 
 export default {
-  components: { Arrow, Bell, Hamburger, Logo, Settings },
+  components: { Logo, Back, Bell, Settings, Menu },
   data: () => ({
     aeppPopup: window.RUNNING_IN_POPUP,
   }),
@@ -49,7 +60,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['tourRunning', 'isLoggedIn', 'notifications', 'pageTitle']),
+    ...mapState(['tourRunning', 'notifications', 'pageTitle']),
     title() {
       return this.$route.meta.title;
     },
@@ -65,9 +76,8 @@ export default {
   methods: {
     ...mapMutations(['setNotificationsStatus']),
     back() {
-      const fallBackRoute = this.isLoggedIn ? '/account' : '/';
       this.$router.push(
-        this.$route.fullPath.substr(0, this.$route.fullPath.lastIndexOf('/')) || fallBackRoute,
+        this.$route.fullPath.substr(0, this.$route.fullPath.lastIndexOf('/')) || '/account',
       );
     },
     async toNotifications() {
@@ -88,91 +98,105 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../styles/variables';
+@import '../../../styles/typography';
 
 .header {
-  height: calc(50px + env(safe-area-inset-top));
-  display: flex;
-  align-items: center;
-  background-color: $nav-bg-color;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 8;
+  height: calc(50px + env(safe-area-inset-top));
+  background-color: $color-black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .content {
-    width: 100%;
+    flex: 1;
+    position: relative;
+    height: 50px;
     max-width: 357px;
-    margin: 0 auto;
     padding: 0 10px;
     padding-top: env(safe-area-inset-top);
+    color: $color-white;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    color: $white-1;
+
+    > :not(.title) {
+      z-index: 1;
+    }
+
+    .left,
+    .right {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-small {
+      width: 36px;
+      height: 26px;
+    }
 
     .title {
-      font-size: 16px;
-    }
-
-    &:not(.isLoggedIn) .title {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .back-arrow,
-    .settings {
-      cursor: pointer;
-    }
-
-    &.isLoggedIn {
-      justify-content: space-between;
-      position: relative;
-
-      > :not(.title) {
-        z-index: 1;
-      }
-
-      .title {
-        position: absolute;
-        left: 0;
-        right: 0;
-        text-align: center;
-      }
-
-      .start-onboarding {
-        margin-left: 13px;
-        cursor: pointer;
-      }
-    }
-
-    svg {
-      vertical-align: middle;
-    }
-
-    button {
-      padding: 0;
-      margin-left: 5px;
-    }
-
-    .noti-holder {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .noti-count {
       position: absolute;
-      background: $secondary-color;
-      font-size: 12px;
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
+      left: 0;
+      right: 0;
+
+      @extend %face-sans-16-medium;
+
       text-align: center;
-      vertical-align: middle;
-      left: -10px;
-      top: 0;
-      line-height: 15px;
-      border: 1px solid $nav-bg-color;
+    }
+
+    .btn-icon {
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      opacity: 0.7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      &:hover {
+        opacity: 1;
+        border-radius: 50%;
+        background-color: $color-hover;
+      }
+    }
+
+    .notifications {
+      position: relative;
+      cursor: pointer;
+
+      .count {
+        position: absolute;
+        left: -2px;
+        top: 20%;
+        z-index: 1;
+        width: 14px;
+        height: 14px;
+        background: $color-blue;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 12px;
+        line-height: 14px;
+      }
+    }
+
+    .back {
+      margin-left: 10px;
+    }
+
+    .settings,
+    .notifications {
+      margin-right: 10px;
     }
   }
 }
