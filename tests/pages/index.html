@@ -27,6 +27,8 @@
     const walletAddress = 'ak_psgfxY4VcnJBTTshx2amBFf397ryoPKTTXyAcrx7BxVAVbt1W';
     const voteAddress = 'ct_TURXFnWFWxRkrcAUK61GiC3sVeGY1uuCru2Zgyy4wJAF8WpXj';
     const tokenAddress = 'ct_EfojX9qfsq2kdxcmhUtCrRdJmXkSTKiRHacL7bCs3wWTCLrMW';
+    const tokenName = encodeURIComponent('Test token name');
+    const tokenDescription = encodeURIComponent('Test token description');
 
     const prefixes = ['superhero:', 'https://wallet.superhero.com/', 'http://localhost:5000/'];
     const paths = [
@@ -50,13 +52,14 @@
       `&x-success=${encodeURIComponent(`${currentUrl}?result=success&signature={signature}`)}` +
       `&x-cancel=${cancelUrl}`,
       `invite/Yqk76XDXNGVMZiCVfzE9NGHwhbXiCAsah2bxVpevCGjdLeeqPaSBVR4CkAdLyb1a7HGn2RD69RDLxYF3rdL3MWouvTyyK`,
-      `buy-token?sale=${saleContractAddress}&buyAmount=0.01`,
-      `sell-token?sale=${saleContractAddress}&sellAmount=0.01`,
-      `create-vote?sale=${saleContractAddress}&description=${message}&payout=${walletAddress}`,
-      `vote?voteAddress=${voteAddress}&tokenAddress=${tokenAddress}&stakeAmount=1.01`,
-      `revoke-vote?voteAddress=${voteAddress}`,
-      `claim-back?voteAddress=${voteAddress}`,
-      `payout-tokens?contractAddress=${saleContractAddress}&voteId=6`
+      `buy-token?sale=${saleContractAddress}&buyAmount=0.01&${callbackParams}`,
+      `sell-token?sale=${saleContractAddress}&sellAmount=0.01&${callbackParams}`,
+      `create-vote?sale=${saleContractAddress}&description=${message}&payout=${walletAddress}&${callbackParams}`,
+      `vote?voteAddress=${voteAddress}&tokenAddress=${tokenAddress}&stakeAmount=1.01&${callbackParams}`,
+      `revoke-vote?voteAddress=${voteAddress}&${callbackParams}`,
+      `claim-back?voteAddress=${voteAddress}&${callbackParams}`,
+      `payout-tokens?contractAddress=${saleContractAddress}&voteId=6&${callbackParams}`,
+      `create-token?name=${tokenName}&description=${tokenDescription}&abbreviation=TKN&${callbackParams}`
     ];
 
     function rerenderDocument() {
